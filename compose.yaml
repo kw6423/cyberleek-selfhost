@@ -1,0 +1,8 @@
+services:
+  cyberleek:
+    image: ghcr.io/kw6423/cyberleek-selfhost:latest
+    ports:
+      - 7942:80
+    environment:
+      # Replace the public ones with your private node/nodes.
+      - RPC_NODES=["https://api.mainnet-beta.solana.com", "https://solana.api.onfinality.io/public", "https://public.rpc.solanavibestation.com", "https://solana.api.pocket.network", "https://solana-rpc.publicnode.com", "https://solana-mainnet.gateway.tatum.io"]

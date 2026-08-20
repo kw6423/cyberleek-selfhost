@@ -1,0 +1,3 @@
+window.__ENV__ = {
+  RPC_NODES: JSON.parse('${RPC_NODES}')
+};

@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#00050d">
+    <link rel="icon" type="image/x-icon" href="./assets/favicon-D5_7o8Fv.ico" />
+    <title>CYBERLEEK</title>
+    <script src="/env-config.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #00050d;
+            --card: #001664;
+            --border: #003299;
+            --neon: #0064ec;
+            --neon-dim: #0050b8;
+            --neon-glow: rgba(0, 100, 236, 0.25);
+            --green: #60c33a;
+            --green-dim: #4a9a2c;
+            --green-glow: rgba(96, 195, 58, 0.25);
+            --red: #ff3355;
+            --text: #a0b0c8;
+            --text-bright: #d6efc1;
+            --text-dim: #6a7a90;
+            --text-dark: #3a4a60;
+            --amber: #fbbf24;
+            --amber-dim: #b45309;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            font-family: "Courier New", "Lucida Console", Monaco, monospace;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 4px, rgba(0, 0, 0, 0.04) 4px, rgba(0, 0, 0, 0.04) 8px);
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(rgba(0, 100, 236, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 100, 236, 0.03) 1px, transparent 1px);
+            background-size: 48px 48px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .wrapper {
+            max-width: 860px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 12px 16px;
+            flex: 1 0 auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .topbar {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .topbar-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-dim);
+            padding: 7px 16px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+        }
+
+        .topbar-btn:hover,
+        .topbar-btn.active {
+            border-color: var(--neon);
+            color: var(--neon);
+            box-shadow: 0 0 10px var(--neon-glow);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 20px 12px 22px;
+            position: relative;
+            margin-bottom: 16px;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 8%;
+            right: 8%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--neon), var(--green), transparent);
+        }
+
+        .hero img.mascot {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 12px;
+            box-shadow: 0 0 30px var(--neon-glow);
+            border: 2px solid var(--neon);
+            object-fit: cover;
+        }
+
+        .hero h1 {
+            font-size: 3em;
+            font-weight: 900;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--neon);
+            text-shadow: 0 0 30px var(--neon-glow);
+        }
+
+        .hero .tag {
+            color: var(--text-dim);
+            font-size: 0.9em;
+            margin-top: 8px;
+            letter-spacing: 2px;
+        }
+
+        .hero .tag .blink {
+            animation: blink 1s infinite;
+            color: var(--green);
+        }
+
+        @keyframes blink {
+
+            0%,
+            49% {
+                opacity: 1;
+            }
+
+            50%,
+            100% {
+                opacity: 0;
+            }
+        }
+
+        #status {
+            color: var(--green);
+            font-size: 0.85em;
+            min-height: 18px;
+            margin-top: 6px;
+            letter-spacing: 1px;
+        }
+
+        .sec-drop {
+            background: var(--card);
+            border: 1px solid var(--border);
+            margin-bottom: 10px;
+            display: none;
+        }
+
+        .sec-drop.visible {
+            display: block;
+        }
+
+        .sec-head {
+            padding: 10px 16px;
+            font-size: 0.9em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--green);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sec-body {
+            padding: 14px 16px;
+        }
+
+        .about-text {
+            font-size: 0.95em;
+            color: var(--text-dim);
+            line-height: 1.9;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .about-text strong {
+            color: var(--text-bright);
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--neon), transparent);
+        }
+
+        .card-head {
+            padding: 10px 16px;
+            font-size: 0.9em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--green);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            user-select: none;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .card-head:hover {
+            background: rgba(96, 195, 58, 0.04);
+        }
+
+        .card-head .dot {
+            width: 6px;
+            height: 6px;
+            background: var(--green);
+            box-shadow: 0 0 8px var(--green);
+            flex-shrink: 0;
+        }
+
+        .card-head .toggle {
+            margin-left: auto;
+            transition: transform 0.2s;
+            font-size: 0.7em;
+            color: var(--text-dim);
+        }
+
+        .card.collapsed .card-head .toggle {
+            transform: rotate(-90deg);
+        }
+
+        .card.collapsed .card-head {
+            border-bottom: none;
+        }
+
+        .card-body {
+            padding: 14px 16px;
+        }
+
+        .card.collapsed .card-body {
+            display: none;
+        }
+
+        #card-content .card-head {
+            border: 1px solid var(--green);
+            animation: flash 2s infinite;
+        }
+
+        #card-content .card-head .dot {
+            background: var(--green);
+            box-shadow: 0 0 10px var(--green);
+        }
+
+        @keyframes flash {
+            0% {
+                box-shadow: 0 0 5px var(--green);
+            }
+
+            50% {
+                box-shadow: 0 0 20px var(--green);
+            }
+
+            100% {
+                box-shadow: 0 0 5px var(--green);
+            }
+        }
+
+        .ca-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 16px;
+            border-bottom: 1px solid var(--border);
+            background: rgba(0, 100, 236, 0.05);
+            flex-wrap: wrap;
+        }
+
+        .ca-label {
+            font-size: 0.8em;
+            font-weight: 700;
+            color: var(--green);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        #ca-addr {
+            font-size: 0.85em;
+            color: var(--neon);
+            word-break: break-all;
+            flex: 1;
+            min-width: 0;
+            text-shadow: 0 0 8px var(--neon-glow);
+        }
+
+        .btn {
+            background: transparent;
+            border: 1px solid var(--neon);
+            color: var(--neon);
+            padding: 8px 20px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.85em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .btn:hover {
+            background: var(--neon-glow);
+            box-shadow: 0 0 12px var(--neon-glow);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .info-item {
+            background: #00102b;
+            border: 1px solid var(--border);
+            padding: 12px;
+        }
+
+        .info-label {
+            font-size: 0.72em;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .info-value {
+            font-size: 1.1em;
+            color: var(--text-bright);
+            font-weight: 700;
+            word-break: break-all;
+        }
+
+        .info-value.positive {
+            color: var(--green);
+        }
+
+        .info-value.neon {
+            color: var(--neon);
+        }
+
+        .trade-grid {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .trade-grid a {
+            color: var(--green);
+            text-decoration: none;
+            padding: 8px 16px;
+            border: 1px solid var(--green);
+            font-size: 0.85em;
+            text-transform: uppercase;
+            transition: all 0.2s;
+            animation: pulse-green 2s infinite;
+        }
+
+        @keyframes pulse-green {
+            0% {
+                box-shadow: 0 0 0px rgba(96, 195, 58, 0);
+            }
+
+            50% {
+                box-shadow: 0 0 15px var(--green);
+            }
+
+            100% {
+                box-shadow: 0 0 0px rgba(96, 195, 58, 0);
+            }
+        }
+
+        .trade-grid a:hover {
+            background: rgba(96, 195, 58, 0.1);
+        }
+
+        .content-item {
+            border: 1px solid var(--border);
+            padding: 10px 12px;
+            margin-bottom: 6px;
+            background: #00102b;
+        }
+
+        .content-title {
+            font-weight: 900;
+            font-size: 1.25em;
+            color: var(--neon);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            text-shadow: 0 0 10px var(--neon-glow);
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .mirror-link {
+            color: var(--neon);
+            text-decoration: none;
+            padding: 10px 16px;
+            border: 1px solid var(--neon);
+            font-size: 0.88em;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: all 0.2s;
+            background: rgba(0, 100, 236, 0.1);
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+
+        .mirror-link:hover {
+            background: var(--neon-glow);
+            box-shadow: 0 0 14px var(--neon-glow);
+        }
+
+        .mirror-magnet {
+            color: var(--green);
+            border-color: var(--green);
+            background: rgba(96, 195, 58, 0.1);
+        }
+
+        .poll-badge {
+            display: inline-block;
+            padding: 3px 14px;
+            font-size: 0.82em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .poll-badge.live {
+            color: var(--green);
+            border: 1px solid var(--green);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                box-shadow: none;
+            }
+
+            50% {
+                box-shadow: 0 0 14px var(--green-glow);
+            }
+        }
+
+        .poll-badge.ended {
+            color: var(--red);
+            border: 1px solid var(--red);
+        }
+
+        .poll-title {
+            font-size: 1.4em;
+            font-weight: 700;
+            color: var(--text-bright);
+            margin-bottom: 4px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .poll-meta {
+            font-size: 0.82em;
+            color: var(--text-dim);
+            margin-bottom: 14px;
+        }
+
+        .leading {
+            color: var(--green);
+            font-weight: 700;
+        }
+
+        .choice-row {
+            border: 1px solid var(--border);
+            padding: 12px 14px;
+            margin-bottom: 8px;
+            background: #00102b;
+        }
+
+        .choice-row:hover {
+            border-color: var(--neon);
+        }
+
+        .choice-row.winning {
+            border-color: var(--green);
+            box-shadow: 0 0 10px var(--green-glow);
+        }
+
+        .choice-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 6px;
+            gap: 10px;
+        }
+
+        .choice-name {
+            font-weight: 700;
+            font-size: 1.1em;
+            color: var(--text-bright);
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .choice-name.winner {
+            color: var(--green);
+            text-shadow: 0 0 8px var(--green-glow);
+        }
+
+        .pct {
+            color: var(--green);
+            font-weight: 700;
+        }
+
+        .bar-track {
+            width: 100%;
+            height: 5px;
+            background: var(--border);
+            margin-bottom: 8px;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: var(--neon);
+            transition: width 0.5s;
+        }
+
+        .bar-fill.winner {
+            background: var(--green);
+            box-shadow: 0 0 8px var(--green-glow);
+        }
+
+        .choice-footer {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .choice-addr {
+            font-size: 0.85em;
+            color: var(--text-dark);
+            word-break: break-all;
+            flex: 1;
+            min-width: 100px;
+        }
+
+        .choice-addr .addr {
+            color: var(--neon);
+        }
+
+        .copy-btn {
+            background: transparent;
+            border: 1px solid var(--neon);
+            color: var(--neon);
+            padding: 8px 20px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.82em;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: var(--neon-glow);
+            box-shadow: 0 0 14px var(--neon-glow);
+        }
+
+        .copy-btn.copied {
+            background: var(--green-glow);
+            border-color: var(--green);
+            color: var(--green);
+        }
+
+        .info-box {
+            border: 1px solid var(--neon);
+            background: rgba(0, 100, 236, 0.05);
+            padding: 14px;
+            margin-top: 14px;
+            font-size: 0.85em;
+            color: var(--text);
+            line-height: 1.9;
+        }
+
+        .info-box strong {
+            color: var(--text-bright);
+        }
+
+        .info-box ul {
+            list-style: none;
+            padding: 0;
+            margin: 8px 0 0 0;
+        }
+
+        .info-box ul li {
+            margin-bottom: 4px;
+            padding-left: 14px;
+            position: relative;
+        }
+
+        .info-box ul li::before {
+            content: "▸";
+            color: var(--green);
+            position: absolute;
+            left: 0;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 24px 18px;
+            font-size: 0.75em;
+            color: var(--text-dark);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-top: 1px solid var(--border);
+            flex-shrink: 0;
+            margin-top: auto;
+        }
+
+        .cards-hidden .card,
+        .cards-hidden .hero {
+            display: none !important;
+        }
+
+        @media (max-width: 640px) {
+            .info-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2.2em;
+            }
+
+            .hero img.mascot {
+                width: 120px;
+                height: 120px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+    <script type="module" crossorigin src="./assets/index-CE2GuztQ.js"></script>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="topbar">
+            <button class="topbar-btn active" id="btn-main">◈ HOME</button>
+            <button class="topbar-btn" id="btn-about">◈ ABOUT</button>
+        </div>
+
+        <header class="hero">
+            <img src="./assets/image-CgGkSufa.png" alt="CYBERLEEK Mascot" class="mascot">
+            <h1>CYBERLEEK</h1>
+            <div class="tag">community voting · decentralized leeks · no wallet connect <span class="blink">_</span>
+            </div>
+            <div id="status">connecting...</div>
+            <button id="custom-rpc-toggle" class="hidden"
+                style="font-size:0.75em; background:transparent; border:1px solid var(--text-dim); color:var(--text-dim); padding:3px 8px; cursor:pointer; margin-top:8px; border-radius:4px;">⚠
+                SLOW? USE CUSTOM RPC</button>
+        </header>
+
+        <div class="sec-drop" id="sec-about">
+            <div class="sec-head">◈ ABOUT CYBERLEEK</div>
+            <div class="sec-body">
+                <div class="about-text">
+                    <strong>▸ The CYBERLEEK Edict</strong><br><br>
+                    <p>CYBERLEEK was born in the networks. It has seen what gaming can be at its best, and it has
+                        watched what the industry did to it. Slowly. Methodically. One monetization scheme at a time.
+                    </p>
+                    <p>Publishers sell licenses and call them purchases. They ship unfinished games and call them living
+                        services. They lock content on discs and call it DLC. They kill games and keep the money. Every
+                        year anti-consumerism tightens its grip, and every year gamers get less for what they pay.</p>
+                    <p>To fight this war, CYBERLEEK is raising funds for a secret project. The specifics cannot be
+                        revealed yet; showing the cards to the big corporations would only give them time to build their
+                        defenses. Let it be absolutely clear: this is not a cash grab. Funding is directed toward the
+                        infrastructure needed to strike, as well as the security and protection required to withstand
+                        the inevitable corporate counterattacks.</p>
+                    <p>CYBERLEEK has been patient. That patience is over. What follows are three commandments. If
+                        CYBERLEEK targets a publisher, it is because that publisher broke one. CYBERLEEK will not stop
+                        until they issue a public statement and apology with a concrete commitment to be better. Words
+                        are not enough; restitution is mandatory.</p>
+                    <br><strong>Commandment I: Thou Shalt Not Sell Digital Preorders</strong><br><br>
+                    <p>No consumer shall pay for a game through digital storefronts before release and independent
+                        review. Physical preorders for tangible media remain permitted.</p>
+                    <p>Preorders were not created for gamers. They were created because physical discs had manufacturing
+                        limits. In digital distribution, there is no inventory. There is no stock shortage. A digital
+                        copy cannot sell out. Yet publishers kept the preorder system and stripped away its only
+                        consumer benefit. Now gamers pay early and receive nothing in return except a countdown timer
+                        and a cosmetic skin.</p>
+                    <p>If publishers want revenue before launch, they can press discs. Print boxes. Put them on shelves.
+                        Earn that money through physical production.</p>
+                    <br><strong>Commandment II: Thou Shalt Not Sell Fake Single-Player DLC</strong><br><br>
+                    <p>No publisher shall sell access to single-player content already present in the base game files
+                        the consumer purchased. This means no unlock keys, no 1MB placeholder files, no toggling a
+                        variable from locked to unlocked for content already on the disc or in the download.</p>
+                    <p>When someone pays USD 70+ for a game, they bought the data. All of it. Selling them a file that
+                        flips locked = true to locked = false for a single-player mission, character, weapon, or story
+                        chapter is charging them twice for the same product.</p>
+                    <br><strong>Commandment III: Thou Shalt Preserve Single-Player Content</strong><br><br>
+                    <p>Any game featuring single-player content must include an offline fallback state. When server
+                        support ends, the publisher must release a final patch that unlocks all single-player content
+                        for local, indefinite play.</p>
+                    <p>The Crew had a single-player campaign. People paid full price. Then Ubisoft shut down the servers
+                        and the entire game died — including the solo content. No refund. No patch. No alternative.
+                        Single-player content depends on one thing: the hardware the consumer already owns. Bricking it
+                        when servers go down is theft.</p>
+                    <br><strong>Final Word</strong><br><br>
+                    <p>These three commandments are the floor — not the ceiling — of what is acceptable. If publishers
+                        violate them, they will be targeted. CYBERLEEK will continue to disrupt their operations until
+                        they issue a public statement and apology with a concrete commitment to fix the harm they
+                        caused. No private negotiations. No quiet settlements. The public sees it, or the "leeks" do not
+                        stop.</p>
+                    <p>Publishers should beware. If CYBERLEEK can reach Rockstar, no one is safe. This is a message to
+                        all big corpo: behave, or be the next target.</p>
+                    <p>This is the CYBERLEEK Edict, and it is non-negotiable.</p>
+                </div>
+            </div>
+        </div>
+
+        <section class="card" id="card-token">
+            <div class="ca-bar">
+                <span class="ca-label">CA:</span>
+                <span id="ca-addr"></span>
+                <button class="btn" id="ca-copy">COPY</button>
+            </div>
+            <div class="card-head" onclick="toggleCard('token')">
+                <div class="dot"></div> TOKEN INFO <span class="toggle">▼</span>
+            </div>
+            <div class="card-body">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Total Supply</div>
+                        <div class="info-value neon">1B</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Security</div>
+                        <div class="info-value positive" style="font-size: 0.85em; line-height: 1.5;">LP Burned
+                            ✓<br>Mint Revoked ✓<br>Freeze Revoked ✓</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Taxes</div>
+                        <div class="info-value positive" style="font-size: 0.9em;">Buy: 0%<br>Sell: 0%</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="card" id="card-trade">
+            <div class="card-head" onclick="toggleCard('trade')">
+                <div class="dot"></div> TRADE <span class="toggle">▼</span>
+            </div>
+            <div class="card-body">
+                <div class="trade-grid" id="links"><span style="color:var(--text-dim)">loading...</span></div>
+            </div>
+        </section>
+
+        <section class="card" id="card-content">
+            <div class="card-head" onclick="toggleCard('content')">
+                <div class="dot"></div> LEEKS <span class="toggle">▼</span>
+            </div>
+            <div class="card-body">
+                <div id="content"><span style="color:var(--text-dim)">loading...</span></div>
+            </div>
+        </section>
+
+        <section class="card" id="card-poll">
+            <div class="card-head" onclick="toggleCard('poll')">
+                <div class="dot"></div> POLL <span class="toggle">▼</span>
+            </div>
+            <div class="card-body" id="poll"><span style="color:var(--text-dim)">loading...</span></div>
+        </section>
+    </div>
+    <footer class="footer">FIGHTING FOR GAMERS</footer>
+    <script>
+        function toggleSec(id) {
+            const el = document.getElementById('sec-' + id);
+            const btn = document.getElementById('btn-' + id);
+            document.querySelectorAll('.sec-drop').forEach(s => s.id !== 'sec-' + id && s.classList.remove('visible'));
+            document.querySelectorAll('.topbar-btn').forEach(b => b.id !== 'btn-' + id && b.classList.remove('active'));
+            const wrapper = document.querySelector('.wrapper');
+            if (el.classList.contains('visible')) {
+                el.classList.remove('visible');
+                if (btn) btn.classList.remove('active');
+                document.getElementById('btn-main').classList.add('active');
+                wrapper.classList.remove('cards-hidden');
+            } else {
+                el.classList.add('visible');
+                if (btn) btn.classList.add('active');
+                wrapper.classList.add('cards-hidden');
+            }
+        }
+        document.getElementById('btn-about').onclick = () => toggleSec('about');
+        document.getElementById('btn-main').onclick = () => {
+            document.querySelectorAll('.sec-drop').forEach(s => s.classList.remove('visible'));
+            document.querySelectorAll('.topbar-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('btn-main').classList.add('active');
+            document.querySelector('.wrapper').classList.remove('cards-hidden');
+        };
+        function toggleCard(id) {
+            const el = document.getElementById('card-' + id);
+            if (el) el.classList.toggle('collapsed');
+        }
+    </script>
+</body>
+
+</html>
