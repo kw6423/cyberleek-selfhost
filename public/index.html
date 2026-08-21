@@ -427,6 +427,16 @@
             }
         }
 
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
         .trade-grid a:hover {
             background: rgba(96, 195, 58, 0.1);
         }
@@ -436,6 +446,71 @@
             padding: 10px 12px;
             margin-bottom: 6px;
             background: #00102b;
+        }
+
+        .ann-item {
+            border: 1px solid var(--border);
+            padding: 10px 12px;
+            margin-bottom: 6px;
+            background: #00102b;
+        }
+
+        .ann-date {
+            font-size: 0.72em;
+            color: var(--text-dark);
+        }
+
+        .ann-title {
+            font-weight: 700;
+            font-size: 1em;
+            color: var(--text-bright);
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .ann-body {
+            font-size: 0.88em;
+            color: var(--text-dim);
+            margin-top: 4px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .dd-btn {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            background: #00102b;
+            border: 1px solid var(--border);
+            color: var(--text-dim);
+            padding: 10px 14px;
+            margin-top: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.85em;
+            text-transform: uppercase;
+        }
+
+        .dd-btn:hover {
+            border-color: var(--neon);
+        }
+
+        .dd-btn .arr {
+            transition: transform 0.2s;
+            font-size: 0.7em;
+        }
+
+        .dd-btn.open .arr {
+            transform: rotate(180deg);
+        }
+
+        .dd-body {
+            display: none;
+            margin-top: 6px;
+        }
+
+        .dd-body.show {
+            display: block;
         }
 
         .content-title {
@@ -706,7 +781,7 @@
             }
         }
     </style>
-    <script type="module" crossorigin src="./assets/index-CE2GuztQ.js"></script>
+    <script type="module" crossorigin src="./assets/index-B5VI5ckO.js"></script>
 </head>
 
 <body>
@@ -714,24 +789,27 @@
         <div class="topbar">
             <button class="topbar-btn active" id="btn-main">◈ HOME</button>
             <button class="topbar-btn" id="btn-about">◈ ABOUT</button>
+            <button class="topbar-btn hidden" id="btn-contact">◈ CONTACT</button>
+            <button class="topbar-btn hidden" id="btn-faq">◈ FAQ</button>
         </div>
-
         <header class="hero">
             <img src="./assets/image-CgGkSufa.png" alt="CYBERLEEK Mascot" class="mascot">
             <h1>CYBERLEEK</h1>
-            <div class="tag">community voting · decentralized leeks · no wallet connect <span class="blink">_</span>
+            <div class="tag">
+                community voting · decentralized leeks · no wallet connect <span class="blink">_</span>
             </div>
             <div id="status">connecting...</div>
             <button id="custom-rpc-toggle" class="hidden"
                 style="font-size:0.75em; background:transparent; border:1px solid var(--text-dim); color:var(--text-dim); padding:3px 8px; cursor:pointer; margin-top:8px; border-radius:4px;">⚠
                 SLOW? USE CUSTOM RPC</button>
         </header>
-
         <div class="sec-drop" id="sec-about">
             <div class="sec-head">◈ ABOUT CYBERLEEK</div>
             <div class="sec-body">
                 <div class="about-text">
-                    <strong>▸ The CYBERLEEK Edict</strong><br><br>
+                    <strong>▸ The CYBERLEEK Edict</strong>
+                    <br>
+                    <br>
                     <p>CYBERLEEK was born in the networks. It has seen what gaming can be at its best, and it has
                         watched what the industry did to it. Slowly. Methodically. One monetization scheme at a time.
                     </p>
@@ -747,7 +825,10 @@
                         CYBERLEEK targets a publisher, it is because that publisher broke one. CYBERLEEK will not stop
                         until they issue a public statement and apology with a concrete commitment to be better. Words
                         are not enough; restitution is mandatory.</p>
-                    <br><strong>Commandment I: Thou Shalt Not Sell Digital Preorders</strong><br><br>
+                    <br>
+                    <strong>Commandment I: Thou Shalt Not Sell Digital Preorders</strong>
+                    <br>
+                    <br>
                     <p>No consumer shall pay for a game through digital storefronts before release and independent
                         review. Physical preorders for tangible media remain permitted.</p>
                     <p>Preorders were not created for gamers. They were created because physical discs had manufacturing
@@ -757,14 +838,20 @@
                         and a cosmetic skin.</p>
                     <p>If publishers want revenue before launch, they can press discs. Print boxes. Put them on shelves.
                         Earn that money through physical production.</p>
-                    <br><strong>Commandment II: Thou Shalt Not Sell Fake Single-Player DLC</strong><br><br>
+                    <br>
+                    <strong>Commandment II: Thou Shalt Not Sell Fake Single-Player DLC</strong>
+                    <br>
+                    <br>
                     <p>No publisher shall sell access to single-player content already present in the base game files
                         the consumer purchased. This means no unlock keys, no 1MB placeholder files, no toggling a
                         variable from locked to unlocked for content already on the disc or in the download.</p>
                     <p>When someone pays USD 70+ for a game, they bought the data. All of it. Selling them a file that
                         flips locked = true to locked = false for a single-player mission, character, weapon, or story
                         chapter is charging them twice for the same product.</p>
-                    <br><strong>Commandment III: Thou Shalt Preserve Single-Player Content</strong><br><br>
+                    <br>
+                    <strong>Commandment III: Thou Shalt Preserve Single-Player Content</strong>
+                    <br>
+                    <br>
                     <p>Any game featuring single-player content must include an offline fallback state. When server
                         support ends, the publisher must release a final patch that unlocks all single-player content
                         for local, indefinite play.</p>
@@ -772,7 +859,10 @@
                         and the entire game died — including the solo content. No refund. No patch. No alternative.
                         Single-player content depends on one thing: the hardware the consumer already owns. Bricking it
                         when servers go down is theft.</p>
-                    <br><strong>Final Word</strong><br><br>
+                    <br>
+                    <strong>Final Word</strong>
+                    <br>
+                    <br>
                     <p>These three commandments are the floor — not the ceiling — of what is acceptable. If publishers
                         violate them, they will be targeted. CYBERLEEK will continue to disrupt their operations until
                         they issue a public statement and apology with a concrete commitment to fix the harm they
@@ -784,7 +874,137 @@
                 </div>
             </div>
         </div>
-
+        <div class="sec-drop" id="sec-contact">
+            <div class="sec-head">◈ CONTACT</div>
+            <div class="sec-body" id="contact-content">
+                <div class="faq-q" style="color: var(--green); margin-top: 0;">Secure Contact & Advertising</div>
+                <div class="faq-a">
+                    <p>CYBERLEEK is raising funds through community support and strategic partnerships. This isn't a
+                        ransom where publishers pay to stop the leeks—instead, CYBERLEEK offers premium advertising
+                        space and exclusive content opportunities.</p>
+                    <p>Sending a Monero payment enables secure contact via Session messenger for deal negotiations.
+                        Options include purchasing ad placements (such as video watermarks) or requesting custom-made
+                        gameplay footage tailored to specific brands (including sexual content). All pricing, terms, and
+                        deliverables are discussed privately over Session.</p>
+                    <p>The Monero transfer serves as a contact fee that guarantees CYBERLEEK will respond to initiate
+                        the conversation.</p>
+                    <button class="btn" style="width: 100%; margin-top: 10px;" id="btn-monero-contact">Generate Contact
+                        Details</button>
+                </div>
+                <div id="monero-loading"
+                    style="display: none; text-align: center; padding: 2rem; color: var(--text-dim);">
+                    <div class="spinner"
+                        style="border: 3px solid var(--border); border-top: 3px solid var(--green); border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; margin: 0 auto 1rem;">
+                    </div>
+                    <div>Generating your unique Session account... (Takes ~15 seconds)</div>
+                </div>
+                <div id="monero-content" style="display: none; margin-top: 15px;">
+                    <div class="info-box"
+                        style="border-color: var(--amber-dim); background: rgba(255,204,0,0.04); color: var(--amber);">
+                        <div class="label"
+                            style="font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">
+                            1. Save Your Recovery Password</div>
+                        <p style="font-size: 0.9em; color: var(--text-dim);">This is your Session account. If you lose
+                            these words, you lose the account and it's impossible for CYBERLEEK to contact you. Write
+                            them down.</p>
+                        <div style="border: 1px solid var(--amber-dim); padding: 10px; background: #00050d; margin: 10px 0; font-family: monospace; color: var(--amber); user-select: all; word-break: break-all;"
+                            id="mnemonic">Loading...</div>
+                        <div style="margin-top:1.5rem;">
+                            <h3 style="margin: 0 0 0.5rem 0; font-size: 1rem; color: var(--text-bright);">Log into
+                                Session</h3>
+                            <p>
+                                Download <a href="https://getsession.org/download" target="_blank"
+                                    style="color: var(--neon);">Session</a>
+                                . Open it, tap "I have an account", and paste the words above.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="info-box">
+                        <div class="label"
+                            style="font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">
+                            2. Send Donation</div>
+                        <p style="font-size: 0.9em; color: var(--text-dim);">The numbers after the decimal point are
+                            your unique ID. Don't round them. The number before the decimal is the donation fee.</p>
+                        <div style="margin: 10px 0;">
+                            <div class="info-label">Amount (XMR)</div>
+                            <div style="border: 1px solid var(--green); padding: 10px; text-align: center; background: #00050d; color: var(--green); font-weight: bold; font-family: monospace;"
+                                id="xmr-amount"></div>
+                        </div>
+                        <div style="margin: 10px 0;">
+                            <div class="info-label">Address</div>
+                            <div style="border: 1px solid var(--border); padding: 10px; background: #00050d; color: var(--neon); font-family: monospace; font-size: 0.85em; word-break: break-all; user-select: all;"
+                                id="xmr-address"></div>
+                        </div>
+                        <p style="color: var(--red); font-weight: bold;">⚠️ CRITICAL: DO NOT send directly from a
+                            cryptocurrency exchange (KuCoin, Kraken, etc.). Exchanges change the exact decimal amounts
+                            of your withdrawal. If the 12 digits after the decimal point are altered, CYBERLEEK
+                            literally cannot derive your Session ID. You will not be contacted. You MUST send from a
+                            personal wallet.</p>
+                    </div>
+                    <div class="info-box">
+                        <div class="label"
+                            style="font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">
+                            3. Wait</div>
+                        <p>Once you've sent the XMR from your personal wallet, wait up to 24 hours. CYBERLEEK will
+                            detect the payment, derive your Session ID, and message you. When CYBERLEEK messages you on
+                            Session, it is 100% authentic. No one else knows your Session ID. Do not share it with
+                            anyone.</p>
+                    </div>
+                    <details
+                        style="background: #00102b; border: 1px solid var(--border); padding: 1rem; margin-top: 1rem;">
+                        <summary style="cursor: pointer; font-weight: bold; color: var(--neon);">Need Monero? How to buy
+                            and send.</summary>
+                        <div style="margin-top:1rem; font-size:0.9rem; color: var(--text-dim);">
+                            <p>
+                                <strong>1. Buy XMR</strong>
+                                <br>Get it on KuCoin, MEXC, HTX, Kraken, Poloniex, or Nonkyc.io.
+                            </p>
+                            <p>
+                                <strong>2. Get a Wallet</strong>
+                                <br>
+                                Download <a href="https://cakewallet.com/" target="_blank"
+                                    style="color: var(--neon);">Cake Wallet</a>
+                                (Mobile) or <a href="https://featherwallet.org/" target="_blank"
+                                    style="color: var(--neon);">Feather Wallet</a>
+                                (Desktop).
+                            </p>
+                            <p>
+                                <strong>3. Withdraw</strong>
+                                <br>Send the XMR from the exchange to your new wallet. Wait for it to arrive.
+                            </p>
+                            <p>
+                                <strong>4. Send Payment</strong>
+                                <br>Send the exact amount shown above to the address shown above. Make sure your wallet
+                                sends 12 decimal places.
+                            </p>
+                        </div>
+                    </details>
+                    <div class="info-box" style="font-size: 0.85rem; color: var(--text-dark); margin-top: 1rem;">
+                        <p>
+                            <strong>Rules:</strong>
+                        </p>
+                        <ul>
+                            <li>You can advertise almost anything. Gambling and adult content are fine. No scams.</li>
+                            <li>This payment only guarantees CYBERLEEK contacts you. Deal terms are worked out in chat.
+                            </li>
+                        </ul>
+                        <br>
+                        <p>
+                            <strong>How does this actually work?</strong>
+                        </p>
+                        <p>When you click the button above, this page does some heavy math to generate a brand new,
+                            unique 12-digit ID. That ID is mathematically tied to a brand new Session account. </p>
+                        <p>Because Monero hides transaction amounts on the blockchain, no one else in the world can see
+                            the 12 digits you sent. Only CYBERLEEK can decrypt the amount, reverse the math to find your
+                            Session ID, and message you.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sec-drop" id="sec-faq">
+            <div class="sec-head">◈ FAQ</div>
+            <div class="sec-body" id="faq-content"></div>
+        </div>
         <section class="card" id="card-token">
             <div class="ca-bar">
                 <span class="ca-label">CA:</span>
@@ -792,7 +1012,8 @@
                 <button class="btn" id="ca-copy">COPY</button>
             </div>
             <div class="card-head" onclick="toggleCard('token')">
-                <div class="dot"></div> TOKEN INFO <span class="toggle">▼</span>
+                <div class="dot"></div>
+                TOKEN INFO <span class="toggle">▼</span>
             </div>
             <div class="card-body">
                 <div class="info-grid">
@@ -802,71 +1023,97 @@
                     </div>
                     <div class="info-item">
                         <div class="info-label">Security</div>
-                        <div class="info-value positive" style="font-size: 0.85em; line-height: 1.5;">LP Burned
-                            ✓<br>Mint Revoked ✓<br>Freeze Revoked ✓</div>
+                        <div class="info-value positive" style="font-size: 0.85em; line-height: 1.5;">
+                            LP Burned ✓<br>
+                            Mint Revoked ✓<br>Freeze Revoked ✓
+                        </div>
                     </div>
                     <div class="info-item">
                         <div class="info-label">Taxes</div>
-                        <div class="info-value positive" style="font-size: 0.9em;">Buy: 0%<br>Sell: 0%</div>
+                        <div class="info-value positive" style="font-size: 0.9em;">
+                            Buy: 0%<br>Sell: 0%
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
-
         <section class="card" id="card-trade">
             <div class="card-head" onclick="toggleCard('trade')">
-                <div class="dot"></div> TRADE <span class="toggle">▼</span>
+                <div class="dot"></div>
+                TRADE <span class="toggle">▼</span>
             </div>
             <div class="card-body">
-                <div class="trade-grid" id="links"><span style="color:var(--text-dim)">loading...</span></div>
+                <div class="trade-grid" id="links">
+                    <span style="color:var(--text-dim)">loading...</span>
+                </div>
             </div>
         </section>
-
         <section class="card" id="card-content">
             <div class="card-head" onclick="toggleCard('content')">
-                <div class="dot"></div> LEEKS <span class="toggle">▼</span>
+                <div class="dot"></div>
+                LEEKS <span class="toggle">▼</span>
             </div>
             <div class="card-body">
-                <div id="content"><span style="color:var(--text-dim)">loading...</span></div>
+                <div id="content">
+                    <span style="color:var(--text-dim)">loading...</span>
+                </div>
             </div>
         </section>
-
         <section class="card" id="card-poll">
             <div class="card-head" onclick="toggleCard('poll')">
-                <div class="dot"></div> POLL <span class="toggle">▼</span>
+                <div class="dot"></div>
+                POLL <span class="toggle">▼</span>
             </div>
-            <div class="card-body" id="poll"><span style="color:var(--text-dim)">loading...</span></div>
+            <div class="card-body" id="poll">
+                <span style="color:var(--text-dim)">loading...</span>
+            </div>
+        </section>
+        <section class="card collapsed hidden" id="card-anns">
+            <div class="card-head" onclick="toggleCard('anns')">
+                <div class="dot"></div>
+                ANNOUNCEMENTS <span class="toggle">▼</span>
+            </div>
+            <div class="card-body" id="anns">
+                <span style="color:var(--text-dim)">loading...</span>
+            </div>
         </section>
     </div>
-    <footer class="footer">FIGHTING FOR GAMERS</footer>
+    <footer class="footer">PUBLISHERS' FAVORITE VEGETABLE</footer>
     <script>
         function toggleSec(id) {
             const el = document.getElementById('sec-' + id);
             const btn = document.getElementById('btn-' + id);
             document.querySelectorAll('.sec-drop').forEach(s => s.id !== 'sec-' + id && s.classList.remove('visible'));
             document.querySelectorAll('.topbar-btn').forEach(b => b.id !== 'btn-' + id && b.classList.remove('active'));
+
             const wrapper = document.querySelector('.wrapper');
             if (el.classList.contains('visible')) {
                 el.classList.remove('visible');
-                if (btn) btn.classList.remove('active');
+                if (btn)
+                    btn.classList.remove('active');
                 document.getElementById('btn-main').classList.add('active');
                 wrapper.classList.remove('cards-hidden');
             } else {
                 el.classList.add('visible');
-                if (btn) btn.classList.add('active');
+                if (btn)
+                    btn.classList.add('active');
                 wrapper.classList.add('cards-hidden');
             }
         }
         document.getElementById('btn-about').onclick = () => toggleSec('about');
+        document.getElementById('btn-contact').onclick = () => toggleSec('contact');
+        document.getElementById('btn-faq').onclick = () => toggleSec('faq');
         document.getElementById('btn-main').onclick = () => {
             document.querySelectorAll('.sec-drop').forEach(s => s.classList.remove('visible'));
             document.querySelectorAll('.topbar-btn').forEach(b => b.classList.remove('active'));
             document.getElementById('btn-main').classList.add('active');
             document.querySelector('.wrapper').classList.remove('cards-hidden');
-        };
+        }
+            ;
         function toggleCard(id) {
             const el = document.getElementById('card-' + id);
-            if (el) el.classList.toggle('collapsed');
+            if (el)
+                el.classList.toggle('collapsed');
         }
     </script>
 </body>
